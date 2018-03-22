@@ -1,11 +1,13 @@
 include(vcpkg_common_functions)
-set(SOURCE_PATH ${CURRENT_BUILDTREES_DIR}/src/glfw-3.2.1)
-vcpkg_download_distfile(ARCHIVE
-    URLS "https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip"
-    FILENAME "glfw-3.2.1.zip"
-    SHA512 73dd6d4a8d28a2b423f0fb25489659c1a845182b7ef09848d4f442cdc489528aea90f43ac84aeedb9d2301c4487f39782b647ee4959e67e83babb838372b980c
+set(SOURCE_PATH ${CURRENT_BUILDTREES_DIR}/src/glfw-8138d057a9b1ee53b9800205f2320dba18bdfcb9)
+
+vcpkg_from_github(
+    OUT_SOURCE_PATH SOURCE_PATH
+    REPO complexrehabsystems/glfw
+    REF 8138d057a9b1ee53b9800205f2320dba18bdfcb9
+    SHA512 ffa3c456bb71410c1ad7369ae9cacd4a18f21b9f17304aee07c147754a4d048286e71a15e17308778f5b4f1848e978e94ad58376054ec415cfb9f96cea7f2189
+    HEAD_REF crs-attach-win32-window
 )
-vcpkg_extract_source_archive(${ARCHIVE})
 
 if(NOT EXISTS ${SOURCE_PATH}/patch-config.stamp)
     message(STATUS "Patching src/glfw3Config.cmake.in")
@@ -13,18 +15,13 @@ if(NOT EXISTS ${SOURCE_PATH}/patch-config.stamp)
     string(REPLACE "\"@GLFW_LIB_NAME@\"" "NAMES @GLFW_LIB_NAME@ @GLFW_LIB_NAME@dll"
         CONFIG ${CONFIG}
     )
-    #string(REPLACE "@PACKAGE_CMAKE_INSTALL_PREFIX@" "@PACKAGE_CMAKE_INSTALL_PREFIX@/../.."
-    #    CONFIG ${CONFIG}
-    #)
+    string(REPLACE "@PACKAGE_CMAKE_INSTALL_PREFIX@" "@PACKAGE_CMAKE_INSTALL_PREFIX@/../.."
+       CONFIG ${CONFIG}
+    )
     file(WRITE ${SOURCE_PATH}/src/glfw3Config.cmake.in ${CONFIG})
     file(APPEND ${SOURCE_PATH}/src/glfw3Config.cmake.in "set(GLFW3_LIBRARIES \${GLFW3_LIBRARY})\n")
     file(WRITE ${SOURCE_PATH}/patch-config.stamp)
 endif()
-
-vcpkg_apply_patches(
-    SOURCE_PATH ${SOURCE_PATH}
-    PATCHES ${CMAKE_CURRENT_LIST_DIR}/move-cmake-min-req.patch
-)
 
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
@@ -52,20 +49,7 @@ file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/lib/cmake)
 
 file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/include)
 
-if(VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
-    file(MAKE_DIRECTORY ${CURRENT_PACKAGES_DIR}/bin ${CURRENT_PACKAGES_DIR}/debug/bin)
-    file(RENAME ${CURRENT_PACKAGES_DIR}/lib/glfw3.dll ${CURRENT_PACKAGES_DIR}/bin/glfw3.dll)
-    file(RENAME ${CURRENT_PACKAGES_DIR}/debug/lib/glfw3.dll ${CURRENT_PACKAGES_DIR}/debug/bin/glfw3.dll)
-    foreach(_conf release
-                  debug)
-        file(READ ${CURRENT_PACKAGES_DIR}/share/glfw3/glfw3Targets-${_conf}.cmake _contents)
-        string(REPLACE "lib/glfw3.dll" "bin/glfw3.dll" _contents "${_contents}")
-        file(WRITE ${CURRENT_PACKAGES_DIR}/share/glfw3/glfw3Targets-${_conf}.cmake "${_contents}")
-    endforeach()
-
-endif()
-
-file(COPY ${SOURCE_PATH}/COPYING.txt DESTINATION ${CURRENT_PACKAGES_DIR}/share/glfw3)
-file(RENAME ${CURRENT_PACKAGES_DIR}/share/glfw3/COPYING.txt ${CURRENT_PACKAGES_DIR}/share/glfw3/copyright)
+file(COPY ${SOURCE_PATH}/LICENSE.md DESTINATION ${CURRENT_PACKAGES_DIR}/share/glfw3)
+file(RENAME ${CURRENT_PACKAGES_DIR}/share/glfw3/LICENSE.md ${CURRENT_PACKAGES_DIR}/share/glfw3/copyright)
 vcpkg_copy_pdbs()
 
