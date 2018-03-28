@@ -2,10 +2,10 @@ include(vcpkg_common_functions)
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO PointCloudLibrary/pcl
-    REF pcl-1.8.1
-    SHA512 9e7c87fb750a176712f08d215a906012c9e8174b687bbc8c08fa65de083b4468951bd8017b10409015d5eff0fc343885d2aae5c340346118b1a251af7bdd5cd7
-    HEAD_REF master
+    REPO complexrehabsystems/pcl
+    REF 576d7311f7675b1369e65be131bc71c92882d71b
+    SHA512 1
+    HEAD_REF crs-develop
 )
 
 vcpkg_apply_patches(
@@ -47,6 +47,18 @@ if("tools" IN_LIST FEATURES)
     set(BUILD_TOOLS ON)
 endif()
 
+set(RSSDK2 OFF)
+if("realsense2" IN_LIST FEATURES)
+    set(WITH_RSSDK2 ON)
+endif()
+
+set(BUILD_APPS OFF)
+set(BUILD_APPS_IN_HAND_SCANNER OFF)
+if("crs" IN_LIST FEATURES)
+    set(BUILD_APPS ON)
+    set(BUILD_APPS_IN_HAND_SCANNER ON)
+endif()
+
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
     PREFER_NINJA
@@ -69,6 +81,8 @@ vcpkg_configure_cmake(
         -DWITH_QHULL=ON
         -DWITH_QT=${WITH_QT}
         -DWITH_VTK=ON
+        -DBUILD_APPS=ON
+        -DBUILD_APPS_IN_HAND_SCANNER=ON
 )
 
 vcpkg_install_cmake()

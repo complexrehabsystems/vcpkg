@@ -22,3 +22,11 @@ Build-Depends: boost-accumulators
 Feature: cuda
 Description: CUDA support for PCL
 Build-Depends: cuda
+
+Feature: realsense2
+Description: LibRealSense2 (RSSDK2) support for PCL
+Build-Depends: realsense2
+
+Feature: crs
+Description: CRS specific goodies (i.e. in_hand_scanner)
+Build-Depends: realsense2, vtk[qt]
