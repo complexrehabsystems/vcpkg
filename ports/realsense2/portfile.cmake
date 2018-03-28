@@ -2,25 +2,11 @@ include(vcpkg_common_functions)
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO IntelRealSense/librealsense
-    REF v2.10.1
-    SHA512 fb00a424a5bd7335cc661261e76cf623e27a89af1033692d4cb6ed523af1295359929c235e82253911e61323cb7b82551a9223862174cb0e2363ac944b2db923
-    HEAD_REF development
+    REPO complexrehabsystems/librealsense
+    REF d5c45866c0f866c1d08e4d4fb362dc291e64ee70
+    SHA512 a6f3a6600358923d8231b9c135142d1b23619e965a073f8260c9b1e8e17db04a2e117692704c3484944ef256183005a35c3d1700f8365c6c0bdc427ec29d8790
+    HEAD_REF crs-develop
 )
-
-vcpkg_apply_patches(
-    SOURCE_PATH ${SOURCE_PATH}
-    PATCHES
-        ${CMAKE_CURRENT_LIST_DIR}/build_with_static_crt.patch # https://github.com/IntelRealSense/librealsense/pull/1262
-        ${CMAKE_CURRENT_LIST_DIR}/fix_rgb_using_avx2.patch # https://github.com/IntelRealSense/librealsense/pull/1245
-)
-
-# This option will be deprecated in the later versions.
-# Please see Pull Request #1245. https://github.com/IntelRealSense/librealsense/pull/1245
-set(RGB_USING_AVX2 OFF)
-if("avx2" IN_LIST FEATURES)
-    set(RGB_USING_AVX2 ON)
-endif()
 
 string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" BUILD_LIBRARY_LINKAGE)
 string(COMPARE EQUAL "${VCPKG_CRT_LINKAGE}" "static" BUILD_CRT_LINKAGE)
