@@ -1,5 +1,5 @@
---- a/thread-boost-1.66.0/include/boost/thread/win32/thread_primitives.hpp
-+++ b/thread-boost-1.66.0/include/boost/thread/win32/thread_primitives.hpp
+--- a/include/boost/thread/win32/thread_primitives.hpp
++++ b/include/boost/thread/win32/thread_primitives.hpp
 @@ -49,7 +49,7 @@
              typedef ::boost::detail::winapi::HANDLE_ handle;
              typedef ::boost::detail::winapi::SYSTEM_INFO_ system_info;
