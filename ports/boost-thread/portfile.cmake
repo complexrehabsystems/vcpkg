@@ -10,6 +10,11 @@ vcpkg_from_github(
     HEAD_REF master
 )
 
+vcpkg_apply_patches(
+    SOURCE_PATH ${SOURCE_PATH}
+    PATCHES "${CMAKE_CURRENT_LIST_DIR}/remove_farproc_typedef.patch"
+)
+
 include(${CURRENT_INSTALLED_DIR}/share/boost-build/boost-modular-build.cmake)
 boost_modular_build(SOURCE_PATH ${SOURCE_PATH} REQUIREMENTS "<library>/boost/date_time//boost_date_time")
 include(${CURRENT_INSTALLED_DIR}/share/boost-vcpkg-helpers/boost-modular-headers.cmake)
