@@ -3,8 +3,8 @@ include(vcpkg_common_functions)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO complexrehabsystems/librealsense
-    REF d5c45866c0f866c1d08e4d4fb362dc291e64ee70
-    SHA512 a6f3a6600358923d8231b9c135142d1b23619e965a073f8260c9b1e8e17db04a2e117692704c3484944ef256183005a35c3d1700f8365c6c0bdc427ec29d8790
+    REF df924d65ee509c6a988b06ba972f08181cdf7acf
+    SHA512 5df8c13a7116b2462c4da3f9e6c3cd829bcba210c5e56fe3ef699cc0511dbcb61634f9ff52556aebbaaac2b18ded61a17c3fdf868cc612f88c091411b31e8d14
     HEAD_REF crs-develop
 )
 
