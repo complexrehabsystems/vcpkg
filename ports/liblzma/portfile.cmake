@@ -1,9 +1,7 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO xz-mirror/xz
-    REF v5.2.5
-    SHA512 686f01cfe33e2194766a856c48668c661b25eee194a443524f87ce3f866e0eb54914075b4e00185921516c5211db8cd5d2658f4b91f4a3580508656f776f468e
-    HEAD_REF master
+    REPO complexrehabsystems/xz
+     HEAD_REF master
     PATCHES
         enable-uwp-builds.patch
         fix_config_include.patch

@@ -33,6 +33,10 @@ function(boost_modular_build)
         set(BOOST_BUILD_PATH "${CURRENT_INSTALLED_DIR}/tools/boost-build")
     endif()
 
+    
+    set(BOOST_BUILD_PATH "/Users/patrickabadi/vcpkg/installed/x64-osx/tools/boost-build")
+  
+
     if(NOT EXISTS "${BOOST_BUILD_PATH}")
         if(VCPKG_CMAKE_SYSTEM_NAME STREQUAL "Linux" AND VCPKG_TARGET_ARCHITECTURE STREQUAL "arm64")
             if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "aarch64")

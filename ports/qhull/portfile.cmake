@@ -1,8 +1,6 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO qhull/qhull
-    REF 613debeaea72ee66626dace9ba1a2eff11b5d37d
-    SHA512 5b8ff9665ba73621a9859a6e86717b980b67f8d79d6c78cbf5672bce66aed671f7d64fcbec457bca79eef2e17e105f136017afdf442bb430b9f4a059d7cb93c3
+    REPO complexrehabsystems/qhull
     HEAD_REF master
     PATCHES include-qhullcpp-shared.patch
 )
@@ -14,6 +12,7 @@ vcpkg_configure_cmake(
     PREFER_NINJA
     OPTIONS
         -DBUILD_STATIC_LIBS=${BUILD_STATIC_LIBS}
+-DLINK_APPS_SHARED=ON
 )
 
 vcpkg_install_cmake()
@@ -44,14 +43,17 @@ else()
 endif()
 vcpkg_fixup_pkgconfig()
 
-vcpkg_copy_tools(TOOL_NAMES
-    qconvex
-    qdelaunay
-    qhalf
-    qhull
-    qvoronoi
-    rbox
-    AUTO_CLEAN
-)
+#vcpkg_copy_tools(TOOL_NAMES
+ #   qconvex
+ #   qdelaunay
+ #   qhalf
+ #   qhull
+ #   qvoronoi
+ #   rbox
+ #   AUTO_CLEAN
+#)
 
 file(INSTALL ${SOURCE_PATH}/README.txt DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT} RENAME copyright)
+
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/bin" "${CURRENT_PACKAGES_DIR}/debug/bin")
+

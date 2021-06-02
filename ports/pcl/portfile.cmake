@@ -39,12 +39,13 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
     vtk         WITH_VTK
 )
 
+
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
     PREFER_NINJA
     OPTIONS
         # BUILD
-        -DBUILD_surface_on_nurbs=ON
+        -DBUILD_surface_on_nurbs=OFF
         # PCL
         -DPCL_BUILD_WITH_BOOST_DYNAMIC_LINKING_WIN32=${PCL_SHARED_LIBS}
         -DPCL_BUILD_WITH_FLANN_DYNAMIC_LINKING_WIN32=${PCL_SHARED_LIBS}
@@ -53,9 +54,15 @@ vcpkg_configure_cmake(
         # WITH
         -DWITH_LIBUSB=OFF
         -DWITH_PNG=ON
-        -DWITH_QHULL=ON
+        -DWITH_QHULL=OFF
+
         # FEATURES
-        ${FEATURE_OPTIONS}
+        #${FEATURE_OPTIONS}
+        -DWITH_VTK=OFF
+-DWITH_QT=OFF
+-DWITH_OPENGL=OFF
+-DBUILD_tools=OFF
+-C /Users/patrickabadi/vcpkg/ports/pcl/TryRunResults.cmake
 )
 
 vcpkg_install_cmake()
